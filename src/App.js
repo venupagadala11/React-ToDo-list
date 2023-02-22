@@ -1,23 +1,36 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useState } from 'react';
+import Todos from './components/Todos';
+import Display from './components/Display';
+
 
 function App() {
+  const [todoList, setTodoList] = useState([]);
+  const [alert, setAlert] = useState("")
+
+  const getTodoList = (todo) =>
+  {
+    if(todo!=="")
+    {
+      setTodoList([...todoList, todo]); 
+      setAlert("")
+    }
+    else
+      setAlert("please enter your ToDo")
+  }
+
+  const dleleteHandler= (index)=>
+  {
+    const newdata = (todoList.filter((task,i)=> index!==i));
+    setTodoList(newdata);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>To Do Application</h1>
+      <Todos sendtodoList={getTodoList} alert={alert}/>
+      <Display todolist={todoList} deleteHandler={dleleteHandler}/>
+      
     </div>
   );
 }
